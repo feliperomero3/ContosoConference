@@ -6,7 +6,7 @@ ASP.NET Core 3.1 Web API to manage the *ficticious* world-famous Contoso Confere
 
 Contoso Conference is held every other year and it presents speakers from all around the world to talk about the latest technologies
 
-## Requirements
+## Prerequisites
 
 - Visual Studio 2019 16.6 (with Web development workload)
 
