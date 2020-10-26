@@ -8,6 +8,8 @@ Contoso Conference is held every other year and it presents speakers from all ar
 
 ## Prerequisites
 
+- An Azure account with an active subscription
+- An Azure AD tenant
 - Visual Studio 2019 16.6 (with Web development workload)
 
 ## Getting started
