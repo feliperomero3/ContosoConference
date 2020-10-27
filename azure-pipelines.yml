@@ -1,0 +1,27 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- script: dotnet restore --verbosity minimal
+  displayName: 'dotnet restore --verbosity minimal'
+
+- script: dotnet build --no-restore --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+
+#- script: dotnet test --collect "Code Coverage"
+#  displayName: 'dotnet test --collect "Code Coverage"'
+
+- script: dotnet publish --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'dotnet publish --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish build artifacts
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
