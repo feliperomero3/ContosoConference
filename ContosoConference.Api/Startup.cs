@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Microsoft.OpenApi.Models;
 
 namespace ContosoConference.Api
 {
@@ -21,12 +22,19 @@ namespace ContosoConference.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
+
             services.AddControllers(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
+
                 options.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contoso Conference API", Version = "v1" });
             });
         }
 
@@ -48,6 +56,13 @@ namespace ContosoConference.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Conference API");
             });
         }
     }
