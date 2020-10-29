@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +37,31 @@ namespace ContosoConference.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contoso Conference API", Version = "v1" });
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Implicit = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri(Configuration["OpenApi:AuthorizationUrl"]),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { Configuration["OpenApi:Scope"], Configuration["OpenApi:ScopeDescription"] }
+                            }
+                        }
+                    }
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                        },
+                        new[] { Configuration["OpenApi:Scope"] }
+                    }
+                });
             });
         }
 
@@ -62,7 +89,12 @@ namespace ContosoConference.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contoso Conference API");
+                c.SwaggerEndpoint(Configuration["OpenApi:SwaggerEndpointUrl"], Configuration["OpenApi:SwaggerEndpointName"]);
+                c.OAuthClientId(Configuration["OpenApi:ClientId"]);
+                c.OAuthClientSecret(Configuration["OpenApi:Secret"]);
+                c.OAuthRealm(Configuration["OpenApi:Realm"]);
+                c.OAuthAppName(Configuration["OpenApi:AppName"]);
+                //c.OAuthUseBasicAuthenticationWithAccessCodeGrant();
             });
         }
     }
