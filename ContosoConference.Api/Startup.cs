@@ -94,7 +94,6 @@ namespace ContosoConference.Api
                 c.OAuthClientSecret(Configuration["OpenApi:Secret"]);
                 c.OAuthRealm(Configuration["OpenApi:Realm"]);
                 c.OAuthAppName(Configuration["OpenApi:AppName"]);
-                //c.OAuthUseBasicAuthenticationWithAccessCodeGrant();
             });
         }
     }
