@@ -70,6 +70,7 @@ namespace ContosoConference.Api
                     }
                 });
                 c.OperationFilter<ContentTypeOperationFilter>();
+                c.OperationFilter<AuthResponsesOperationFilter>();
             });
         }
 
