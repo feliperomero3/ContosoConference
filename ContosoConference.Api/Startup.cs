@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using ContosoConference.Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +35,10 @@ namespace ContosoConference.Api
                     .Build();
 
                 options.Filters.Add(new AuthorizeFilter(policy));
+
+                var outputFormatter = options.OutputFormatters.OfType<SystemTextJsonOutputFormatter>().FirstOrDefault();
+
+                outputFormatter?.SupportedMediaTypes.Remove("text/json");
             });
 
             services.AddSwaggerGen(c =>
@@ -62,6 +69,7 @@ namespace ContosoConference.Api
                         new[] { Configuration["OpenApi:Scope"] }
                     }
                 });
+                c.OperationFilter<ContentTypeOperationFilter>();
             });
         }
 
