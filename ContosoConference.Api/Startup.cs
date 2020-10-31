@@ -43,7 +43,15 @@ namespace ContosoConference.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Contoso Conference API", Version = "v1" });
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Contoso Conference API",
+                        Description = "A sample API with information related to a technical conference. " + 
+                                      "The available resources include *Speakers*, *Sessions* and *Topics*. " + 
+                                      " A single write operation is available to provide feedback on a Session.",
+                        Version = "v1"
+                    });
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
