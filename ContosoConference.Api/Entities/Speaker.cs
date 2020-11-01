@@ -1,9 +1,18 @@
 ﻿namespace ContosoConference.Api.Entities
 {
-    public class Speaker
+    public class Speaker : Entity
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Bio { get; set; }
+
+        private Speaker()
+        {
+        }
+
+        public Speaker(string name, string bio) : this()
+        {
+            Name = name;
+            Bio = bio;
+        }
     }
 }
