@@ -43,8 +43,7 @@ namespace ContosoConference.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1",
-                    new OpenApiInfo
+                c.SwaggerDoc("v1", new OpenApiInfo
                     {
                         Title = "Contoso Conference API",
                         Description = "A sample API with information related to a technical conference. " + 
