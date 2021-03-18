@@ -38,3 +38,9 @@ Contoso Conference is held every other year and it presents speakers from all ar
 ## Notes
 
 This is my attempt at building a REST Web API on ASP.NET Core protected with Azure Active Directory using Microsoft Identity Platform.
+
+## License
+
+[MIT License](./LICENSE)
+
+Copyright (c) 2020 Felipe Romero
