@@ -2,11 +2,11 @@
 
 [![Build Status](https://dev.azure.com/feliperomeromx/Projects/_apis/build/status/feliperomero3.ContosoConference?branchName=master)](https://dev.azure.com/feliperomeromx/Projects/_build/latest?definitionId=12&branchName=master)
 
-ASP.NET Core 3.1 Web API to manage the *fictitious* world-famous Contoso Conference
+ASP.NET Core 3.1 Web API to manage the *fictitious* world-famous Contoso Conference.
 
 ## Overview
 
-Contoso Conference is held every other year and it presents speakers from all around the world to talk about the latest technologies
+Contoso Conference is held every other year and it presents speakers from all around the world to talk about the latest technologies.
 
 ## Prerequisites
 
