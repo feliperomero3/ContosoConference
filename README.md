@@ -1,6 +1,6 @@
 # Contoso Conference
 
-[![Build Status](https://dev.azure.com/feliperomeromx/Projects/_apis/build/status/feliperomero3.ContosoConference?branchName=master)](https://dev.azure.com/feliperomeromx/Projects/_build/latest?definitionId=12&branchName=master)
+[![Build Status][badge]][branch]
 
 ASP.NET Core 3.1 Web API to manage the *fictitious* world-famous Contoso Conference.
 
@@ -21,7 +21,7 @@ Contoso Conference is held every other year and it presents speakers from all ar
 1. Clone this project.
 2. Replace `AzureAd` configuration section in `appsettings.json` file with the values generated for your Azure AD registered App that represents your Web API.
 
-   ```text
+   ```json
    "AzureAd": {
      "Instance": "https://login.microsoftonline.com/",
      "Domain": "[Enter the domain of your tenant, e.g. contoso.onmicrosoft.com]",
@@ -44,3 +44,6 @@ This is my attempt at building a REST Web API on ASP.NET Core protected with Azu
 [MIT License](./LICENSE)
 
 Copyright (c) 2020 Felipe Romero
+
+[branch]: https://dev.azure.com/feliperomeromx/Projects/_build/latest?definitionId=12&branchName=master
+[badge]: https://dev.azure.com/feliperomeromx/Projects/_apis/build/status/feliperomero3.ContosoConference?branchName=master
