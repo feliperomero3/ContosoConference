@@ -44,13 +44,13 @@ namespace ContosoConference.Api
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
-                    {
-                        Title = "Contoso Conference API",
-                        Description = "A sample API with information related to a technical conference. " + 
-                                      "The available resources include *Speakers*, *Sessions* and *Topics*. " + 
+                {
+                    Title = "Contoso Conference API",
+                    Description = "A sample API with information related to a technical conference. " +
+                                      "The available resources include *Speakers*, *Sessions* and *Topics*. " +
                                       " A single write operation is available to provide feedback on a Session.",
-                        Version = "v1"
-                    });
+                    Version = "v1"
+                });
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -107,7 +107,6 @@ namespace ContosoConference.Api
             {
                 c.SwaggerEndpoint(Configuration["OpenApi:SwaggerEndpointUrl"], Configuration["OpenApi:SwaggerEndpointName"]);
                 c.OAuthClientId(Configuration["OpenApi:ClientId"]);
-                c.OAuthClientSecret(Configuration["OpenApi:Secret"]);
                 c.OAuthRealm(Configuration["OpenApi:Realm"]);
                 c.OAuthAppName(Configuration["OpenApi:AppName"]);
             });
