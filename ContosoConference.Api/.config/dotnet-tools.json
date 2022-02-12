@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "msidentity-app-sync": {
+      "version": "1.0.0",
+      "commands": [
+        "msidentity-app-sync"
+      ]
+    }
+  }
+}
