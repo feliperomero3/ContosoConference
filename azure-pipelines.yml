@@ -8,16 +8,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet restore --verbosity minimal
+- script: dotnet restore --verbosity minimal .\src\ContosoConference.sln
   displayName: 'dotnet restore --verbosity minimal'
 
-- script: dotnet build --no-restore --configuration $(buildConfiguration)
+- script: dotnet build --no-restore --configuration $(buildConfiguration) .\src\ContosoConference.sln
   displayName: 'dotnet build $(buildConfiguration)'
 
 #- script: dotnet test --collect "Code Coverage"
 #  displayName: 'dotnet test --collect "Code Coverage"'
 
-- script: dotnet publish --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+- script: dotnet publish --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) .\src\ContosoConference.Api.csproj
   displayName: 'dotnet publish --no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
