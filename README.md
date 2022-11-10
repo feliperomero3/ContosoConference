@@ -37,7 +37,7 @@ Contoso Conference is held every other year and it presents speakers from all ar
 
 ## Notes
 
-This is my attempt at building a REST Web API on ASP.NET Core protected with Azure Active Directory using Microsoft Identity Platform.
+This is my attempt at building a Web API on ASP.NET Core protected with Azure Active Directory using Microsoft Identity Platform.
 The domain model is based on a [Demo Conference API][demo] hosted in Azure used by Microsoft in an API Management tutorial.
 
 ## License
