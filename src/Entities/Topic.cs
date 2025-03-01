@@ -1,16 +1,15 @@
-﻿namespace ContosoConference.Api.Entities
+﻿namespace ContosoConference.Api.Entities;
+
+public class Topic : Entity
 {
-    public class Topic : Entity
+    public string Name { get; set; }
+
+    private Topic()
     {
-        public string Name { get; set; }
+    }
 
-        private Topic()
-        {
-        }
-
-        public Topic(string name) : this()
-        {
-            Name = name;
-        }
+    public Topic(string name) : this()
+    {
+        Name = name;
     }
 }

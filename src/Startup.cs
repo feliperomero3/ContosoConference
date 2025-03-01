@@ -13,103 +13,102 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
-namespace ContosoConference.Api
+namespace ContosoConference.Api;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
+
+        services.AddControllers(options =>
         {
-            Configuration = configuration;
-        }
+            var policy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .Build();
 
-        public IConfiguration Configuration { get; }
+            options.Filters.Add(new AuthorizeFilter(policy));
 
-        public void ConfigureServices(IServiceCollection services)
+            var outputFormatter = options.OutputFormatters.OfType<SystemTextJsonOutputFormatter>().FirstOrDefault();
+
+            outputFormatter?.SupportedMediaTypes.Remove("text/json");
+        });
+
+        services.AddSwaggerGen(c =>
         {
-            services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
-
-            services.AddControllers(options =>
+            c.SwaggerDoc("v1", new OpenApiInfo
             {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-
-                options.Filters.Add(new AuthorizeFilter(policy));
-
-                var outputFormatter = options.OutputFormatters.OfType<SystemTextJsonOutputFormatter>().FirstOrDefault();
-
-                outputFormatter?.SupportedMediaTypes.Remove("text/json");
+                Title = "Contoso Conference API",
+                Description = "A sample API with information related to a technical conference. " +
+                    "The available resources include *Speakers*, *Sessions* and *Topics*. " +
+                    " A single write operation is available to provide feedback on a Session.",
+                Version = "v1"
             });
-
-            services.AddSwaggerGen(c =>
+            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
                 {
-                    Title = "Contoso Conference API",
-                    Description = "A sample API with information related to a technical conference. " +
-                                      "The available resources include *Speakers*, *Sessions* and *Topics*. " +
-                                      " A single write operation is available to provide feedback on a Session.",
-                    Version = "v1"
-                });
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                    Implicit = new OpenApiOAuthFlow
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        AuthorizationUrl = new Uri(Configuration["OpenApi:AuthorizationUrl"]),
+                        Scopes = new Dictionary<string, string>
                         {
-                            AuthorizationUrl = new Uri(Configuration["OpenApi:AuthorizationUrl"]),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                { Configuration["OpenApi:Scope"], Configuration["OpenApi:ScopeDescription"] }
-                            }
+                            { Configuration["OpenApi:Scope"], Configuration["OpenApi:ScopeDescription"] }
                         }
                     }
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                }
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
-                        },
-                        new[] { Configuration["OpenApi:Scope"] }
-                    }
-                });
-                c.OperationFilter<ContentTypeOperationFilter>();
-                c.OperationFilter<AuthResponsesOperationFilter>();
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                    },
+                    new[] { Configuration["OpenApi:Scope"] }
+                }
             });
-        }
+            c.OperationFilter<ContentTypeOperationFilter>();
+            c.OperationFilter<AuthResponsesOperationFilter>();
+        });
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint(Configuration["OpenApi:SwaggerEndpointUrl"], Configuration["OpenApi:SwaggerEndpointName"]);
-                c.OAuthClientId(Configuration["OpenApi:ClientId"]);
-                c.OAuthRealm(Configuration["OpenApi:Realm"]);
-                c.OAuthAppName(Configuration["OpenApi:AppName"]);
-            });
+            app.UseDeveloperExceptionPage();
         }
+
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+
+        app.UseSwagger();
+
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint(Configuration["OpenApi:SwaggerEndpointUrl"], Configuration["OpenApi:SwaggerEndpointName"]);
+            c.OAuthClientId(Configuration["OpenApi:ClientId"]);
+            c.OAuthRealm(Configuration["OpenApi:Realm"]);
+            c.OAuthAppName(Configuration["OpenApi:AppName"]);
+        });
     }
 }
