@@ -2,7 +2,7 @@
 
 [![Build Status][badge]][branch]
 
-ASP.NET Core 3.1 Web API to manage the *fictitious* world-famous Contoso Conference.
+ASP.NET Core 8.0 Web API to manage the *fictitious* world-famous Contoso Conference.
 
 ## Overview
 
@@ -14,7 +14,7 @@ Contoso Conference is held every other year and it presents speakers from all ar
 - An Azure AD tenant
 - An Azure AD Application to represent the Web API you want to protect
 - An Azure AD Application to represent the client (e. g. Postman) you want to allow access to the protected Web API
-- Visual Studio 2019
+- Visual Studio 2022 or later
 
 ## Getting started
 
