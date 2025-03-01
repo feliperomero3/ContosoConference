@@ -44,7 +44,7 @@ The domain model is based on a [Demo Conference API][demo] hosted in Azure used 
 
 [MIT License](./LICENSE)
 
-Copyright &copy; 2022 Felipe Romero
+Copyright &copy; 2025 Felipe Romero
 
 [branch]: https://dev.azure.com/feliperomeromx/Projects/_build/latest?definitionId=12&branchName=master
 [badge]: https://dev.azure.com/feliperomeromx/Projects/_apis/build/status/feliperomero3.ContosoConference?branchName=master
